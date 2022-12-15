@@ -15,7 +15,7 @@ with open('day15.txt') as f:
         beacon[0] = int(beacon[0].split(" ")[4][2:])
         beacon[1] = int(beacon[1][2:])
 
-        # part 1
+        # part 1 (could be better more efficient with algorithm from part 2)
         d = abs(sensor[1] - beacon[1]) + abs(sensor[0] - beacon[0])
         dy = abs(sensor[1] - row)
         inRow = d*2 - 2*dy
