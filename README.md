@@ -1,2 +1,2 @@
 # Advent Of Code
- My solutions for Advent of Code written in Python
+ My solutions of Advent of Code written in Python
