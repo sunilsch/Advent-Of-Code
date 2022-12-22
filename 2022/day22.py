@@ -70,23 +70,22 @@ def solve(part):
         if type(ins) == int:
             #print("move from: x = ", x, " y = ", y," in diretion: ", orientation, end=" ")
             for _ in range(ins):
+                
+                newX = x
+                newY = y
                 if orientation == 0:
-                    newX = x
-                    newY = y
                     newX += 1
                     if newX >= lenOfRow(y):
                         if part == 1:
                             newX = grid[y][0]
                         else:
                             if newY >= 150: # works, 2
-                                print("Change from: ", newX, newY) 
                                 orientation = 3
                                 newX = newY-150+50 #edit
                                 newY = 149
-                                print("to",newX,newY)
                             elif newY >= 100: # works, 2
                                 orientation = 2
-                                newY = 49-(newY-100)
+                                newY = 50-(newY-100)
                                 newX = lenOfRow(newY)-1
                             elif newY >= 50: # works, 2
                                 orientation = 3
@@ -105,17 +104,17 @@ def solve(part):
                         #print("No move possible!")
                         pass
                 elif orientation == 1:
-                    newX = x
-                    newY = y
                     newY += 1
                     if newY >= lenOfColumn(x):
                         if part == 1:
                             newY = firstOfColumn(x)
                         else:
                             if newX >= 100: # works, 2
+                                
                                 orientation = 2
                                 newY += newX-100
                                 newX = lenOfRow(newY)-1
+                                
                                 
                             elif newX >= 50: # works, 2
                                 
@@ -139,8 +138,6 @@ def solve(part):
                         #print("len of column", lenOfColumn(x))
                         pass
                 elif orientation == 2:
-                    newX = x
-                    newY = y
                     newX -= 1
                     if newX < grid[y][0]:
                         if part == 1:
@@ -171,8 +168,6 @@ def solve(part):
 
                 else:
                     assert orientation == 3
-                    newX = x
-                    newY = y
                     newY -= 1
                     if newY < firstOfColumn(x):
                         if part == 1:
