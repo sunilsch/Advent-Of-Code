@@ -1,6 +1,6 @@
 m = {" ": -1, "." : 0, "#" : 1}
 o = {"r": 0, "d": 1, "l": 2, "u": 3}
-# part 2 -> to adjust condition in 76
+# part 2 -> to adjust conditions
 with open('day22.txt') as f:
     grid = []
     n = False
@@ -43,9 +43,6 @@ with open('day22.txt') as f:
         line = line[c:]
         grid.append((c,[m[x] for x in line.strip("\n")]))
 
-x = grid[0][0]
-y = 0
-orientation = 0
 
 def lenOfRow(row):
     return row[0] + len(row[1])
@@ -65,69 +62,85 @@ def firstOfColumn(x):
     for row in range(len(grid)):
         if grid[row][0] <= x:
             return row
-for ins in instructions:
-    print(ins)
-    if type(ins) == int:
-        print("move from: x = ", x, " y = ", y," in diretion: ", orientation, end=" ")
-        for i in range(ins):
-            if orientation == 0:
-                newX = x
-                newX += 1
-                if newX >= lenOfRow(grid[y]): # PART 2
-                    newX = grid[y][0]
-                if grid[y][1][newX-grid[y][0]] == 0:
-                    x = newX
-                else:
-                    #print("No move possible!")
-                    pass
-            elif orientation == 1:
-                newY = y
-                newY += 1
-                if newY >= lenOfColumn(x):
-                    newY = firstOfColumn(x)
-                if grid[newY][1][x-grid[newY][0]] == 0:
-                    y = newY
-                else:
-                    #print("No move possible!")
-                    #print(grid[newY][1])
-                    #print("newY", newY)
-                    #print("len of column", lenOfColumn(x))
-                    pass
-            elif orientation == 2:
-                newX = x
-                newX -= 1
-                if newX < grid[y][0]:
-                    newX = lenOfRow(grid[y])-1
-                if grid[y][1][newX-grid[y][0]] == 0:
-                    x = newX
-                else:
-                    #print("No move possible!")
-                    pass
+def solve(part):
+    x = grid[0][0]
+    y = 0
+    orientation = 0
+    for ins in instructions:
+        print(ins)
+        if type(ins) == int:
+            print("move from: x = ", x, " y = ", y," in diretion: ", orientation, end=" ")
+            for i in range(ins):
+                if orientation == 0:
+                    newX = x
+                    newX += 1
+                    if part == 1:
+                        if newX >= lenOfRow(grid[y]):
+                            newX = grid[y][0]
+                    else:
+                        pass # part2
+                    if grid[y][1][newX-grid[y][0]] == 0:
+                        x = newX
+                    else:
+                        #print("No move possible!")
+                        pass
+                elif orientation == 1:
+                    newY = y
+                    newY += 1
+                    if part == 1:
+                        if newY >= lenOfColumn(x):
+                            newY = firstOfColumn(x)
+                    else:
+                        pass # part2
+                    if grid[newY][1][x-grid[newY][0]] == 0:
+                        y = newY
+                    else:
+                        #print("No move possible!")
+                        #print(grid[newY][1])
+                        #print("newY", newY)
+                        #print("len of column", lenOfColumn(x))
+                        pass
+                elif orientation == 2:
+                    newX = x
+                    newX -= 1
+                    if part == 1:
+                        if newX < grid[y][0]:
+                            newX = lenOfRow(grid[y])-1
+                    else:
+                        pass # part2
+                    if grid[y][1][newX-grid[y][0]] == 0:
+                        x = newX
+                    else:
+                        #print("No move possible!")
+                        pass
 
-            else:
-                assert orientation == 3
-                newY = y
-                newY -= 1
-                if newY < firstOfColumn(x):
-                    newY = lenOfColumn(x)-1
-                    
-                if grid[newY][1][x-grid[newY][0]] == 0:
-                    y = newY
                 else:
-                    #print("No move possible!")
-                    pass
-        print("to x = ", x, " y = ", y)
+                    assert orientation == 3
+                    newY = y
+                    newY -= 1
+                    if part == 1:
+                        if newY < firstOfColumn(x):
+                            newY = lenOfColumn(x)-1
+                    else:
+                        pass # part2
+                    if grid[newY][1][x-grid[newY][0]] == 0:
+                        y = newY
+                    else:
+                        #print("No move possible!")
+                        pass
+            print("to x = ", x, " y = ", y)
 
-    else:
-        if ins == "R":
-            orientation += 1
-            if orientation == 4:
-                orientation = 0
         else:
-            orientation -= 1
-            if orientation == -1:
-                orientation = 3
-
-        #print(orientation)
+            if ins == "R":
+                orientation += 1
+                if orientation == 4:
+                    orientation = 0
+            else:
+                orientation -= 1
+                if orientation == -1:
+                    orientation = 3
+            #print(orientation)
+    return ((y+1)*1000)+((x+1)*4)+orientation
 #print(lenOfRow(grid[0]))
-print(((y+1)*1000)+((x+1)*4)+orientation)
+print(solve(1))
+print(solve(2))
