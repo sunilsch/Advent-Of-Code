@@ -14,9 +14,9 @@ def solve(numbers,part2):
     numbersList = [x for (_,x) in numbers]
     zeroIdx = numbersList.index(0)
     return sum(numbersList[(zeroIdx+1000*i) % len(numbersOrg)] for i in [1, 2, 3]), numbers
-print(solve(numbersPart1,False)[0])
+print("First star: ", solve(numbersPart1,False)[0])
 ans = 0
 for _ in range(10):
     a, numbersPart2 = solve(numbersPart2,True)
     ans += a
-print(a)
+print("Second star: ", a)
