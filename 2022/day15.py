@@ -32,7 +32,7 @@ with open('day15.txt') as f:
 # get result from part 1
 for x in rowPointsRemove:
     rowPoints.discard(x)
-print(len(rowPoints))
+print("First star: ", len(rowPoints))
 
 def part2(i):
     r = []
@@ -55,5 +55,5 @@ def part2(i):
 for i in range(4000000):
     x = part2(i)
     if x != None:
-        print((x*4000000)+i)
+        print("Second star: ", (x*4000000)+i)
         exit()
