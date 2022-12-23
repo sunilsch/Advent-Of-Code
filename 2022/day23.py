@@ -1,28 +1,12 @@
 elfs = []
-rounds = 100000000
 directions = ["north", "south", "west", "east"]
-
-
 with open('day23.txt') as f:
     for i,line in enumerate(f.readlines()):
         line = line.strip()
         for j,x in enumerate(line):
             if x == '#':
                 elfs.append((i,j))
-def printE():
-    maxY = max(elf[0] for elf in elfs)
-    maxX = max(elf[1] for elf in elfs)
-    minY = min(elf[0] for elf in elfs)
-    minX = min(elf[1] for elf in elfs)
-    for i in range(minY,maxY+1):
-        for j in range(minX, maxX+1):
-            if (i,j) in elfs:
-                print("#",end="")
-            else:
-                print(".", end ="")
-        print("")
-#printE()
-def checkDirection(direction, elf): # return tuple of new pos and bool
+def checkDirection(direction, elf):
     y = elf[0]
     x = elf[1]
     if direction == "north" or direction == "south":
@@ -50,7 +34,6 @@ def isEmpty(elf):
                 return False
     return True
 def move(r):
-    #print(directions)
     newPostions = []
     inx = []
     notallowed = set()
@@ -62,52 +45,34 @@ def move(r):
             isValid, newPos = result
             if isValid:
                 if newPos in notallowed:
-                    pass
-                elif not(newPos in newPostions):
-                    #print("added")
+                    continue
+                if not(newPos in newPostions):
                     newPostions.append(newPos)
                     inx.append(i)
                 else:
-                    #print("remove", newPos)
-                    #print(inx)
-                    #print(newPostions)
                     index = newPostions.index(newPos)
                     newPostions.pop(index)
                     inx.pop(index)
                     notallowed.add(newPos)
-                    #print(inx)
-                    #print(newPostions)
                 break
-    #print("new: ", newPostions)
-    #print(notallowed)
-    #print(elfs)
-    #print(newPostions)
     if len(newPostions) == 0:
-        print("Second star", r)
+        print("Second star: ", r+1)
         exit()
     for (index, newPostion) in zip(inx, newPostions):
-        #print("Change from  ",elfs[index], "to  ",newPostion)
         elfs[index] = newPostion
-
-    #print(elfs)
-    directions.append(directions.pop(0)) # cycle directions, works
-    #printE()
+    directions.append(directions.pop(0))
     if r == 9:
         print("First star: ", getArea())
-
-def getArea(): # works
+def getArea():
     ans = 0
     maxY = max(elf[0] for elf in elfs)
     maxX = max(elf[1] for elf in elfs)
     minY = min(elf[0] for elf in elfs)
     minX = min(elf[1] for elf in elfs)
-    #print(minX, maxX, minY, maxY)
     for i in range(minY,maxY+1):
         for j in range(minX, maxX+1):
             if not ((i,j) in elfs):
                 ans += 1
     return ans
-
-for r in range(rounds):
+for r in range(100000000):
     move(r)
-print("First star: ", getArea())
