@@ -1,5 +1,4 @@
-m = {" ": -1, "." : 0, "#" : 1}
-# part 2 -> to adjust conditions
+m = {"." : 0, "#" : 1}
 with open('day22.txt') as f:
     grid = []
     n = False
@@ -52,7 +51,7 @@ def lenOfColumn(x):
     for row in range(len(grid)):
         if not started:
             l2 += 1
-        if grid[row][0] <= x and lenOfRow(row) > x: # not save
+        if grid[row][0] <= x and lenOfRow(row) > x:
             started = True
             l += 1
     return l+l2-1
@@ -65,9 +64,7 @@ def solve(part):
     y = 0
     orientation = 0
     for ins in instructions:
-        print(ins)
         if type(ins) == int:
-            print("move from: x = ", x, " y = ", y," in diretion: ", orientation, end=" ")
             for _ in range(ins):
                 newX = x
                 newY = y
@@ -78,89 +75,67 @@ def solve(part):
                         if part == 1:
                             newX = grid[y][0]
                         else:
-                            if newY >= 150: # works, 2
+                            if newY >= 150:
                                 newOrientation = 3
-                                newX = newY-150+50 #edit
+                                newX = newY-150+50
                                 newY = 149
-                            elif newY >= 100: # works, 2
+                            elif newY >= 100:
                                 newOrientation = 2
-                                newY = 49-(newY-100) #edit
+                                newY = 49-(newY-100)
                                 newX = lenOfRow(newY)-1
-                            elif newY >= 50: # works, 2
+                            elif newY >= 50:
                                 newOrientation = 3
                                 newX += newY-50
                                 newY = 49
-                            else: # works, 2
-                                assert newY < 50
+                            else:
                                 newOrientation = 2
                                 newY = 149-newY
                                 newX = lenOfRow(newY)-1
-                    
-                    #print(newX,newY,x,y)
                     if grid[newY][1][newX-grid[newY][0]] == 0:
                         x = newX
                         y = newY
-                        if orientation != newOrientation:
-                            print("or change")
                         orientation = newOrientation
-                    else:
-                        #print("No move possible!")
-                        pass
                 elif orientation == 1:
                     newY += 1
                     if newY >= lenOfColumn(x):
                         if part == 1:
                             newY = firstOfColumn(x)
                         else:
-                            if newX >= 100: # works, 2
-                                
+                            if newX >= 100:
                                 newOrientation = 2
                                 newY += newX-100
                                 newX = lenOfRow(newY)-1
-                                
-                                
-                            elif newX >= 50: # works, 2
-                                
+                            elif newX >= 50:
                                 newOrientation = 2
                                 newY += newX-50
                                 newX = lenOfRow(newY)-1
-                                
-                            else: # works, 2
+                            else:
                                 assert newX < 50
                                 newX += 100
                                 newY = 0
-                                
-                    #print(newX,newY,x,y)
                     if grid[newY][1][newX-grid[newY][0]] == 0:
                         y = newY
                         x = newX
                         orientation = newOrientation
-                    else:
-                        #print("No move possible!")
-                        #print(grid[newY][1])
-                        #print("newY", newY)
-                        #print("len of column", lenOfColumn(x))
-                        pass
                 elif orientation == 2:
                     newX -= 1
                     if newX < grid[y][0]:
                         if part == 1:
                             newX = lenOfRow(y)-1
                         else:
-                            if newY >= 150: # works, 2
+                            if newY >= 150:
                                 newOrientation = 1
                                 newX += newY-99
                                 newY = 0
-                            elif newY >= 100: # works, 2
+                            elif newY >= 100:
                                 newOrientation = 0
                                 newY = 49-(newY-100)
                                 newX = 50
-                            elif newY >= 50: # works, 2
+                            elif newY >= 50:
                                 newOrientation = 1
-                                newX = newY-50 # edit
+                                newX = newY-50
                                 newY = 100
-                            else: # works
-                                assert newY < 50
+                            else:
                                 newOrientation = 0
                                 newY = 99+(50-newY)
                                 newX = 0
@@ -168,10 +143,6 @@ def solve(part):
                         x = newX
                         y = newY
                         orientation = newOrientation
-                    else:
-                        #print("No move possible!")
-                        pass
-
                 else:
                     assert orientation == 3
                     newY -= 1
@@ -179,15 +150,14 @@ def solve(part):
                         if part == 1:
                             newY = lenOfColumn(x)-1
                         else:
-                            if newX >= 100: # works
+                            if newX >= 100:
                                 newX -= 100
                                 newY = 199
                             elif newX >= 50:
                                 newOrientation = 0
-                                newY = 150+(newX-50) # edit
+                                newY = 150+(newX-50)
                                 newX = 0
                             else:
-                                assert newX < 50
                                 newOrientation = 0
                                 newY = 50+newX
                                 newX = 50
@@ -195,11 +165,6 @@ def solve(part):
                         x = newX
                         y = newY
                         orientation = newOrientation
-                    else:
-                        #print("No move possible!")
-                        pass
-            print("to x = ", x, " y = ", y, "new d: ", orientation)
-
         else:
             if ins == "R":
                 orientation += 1
@@ -209,8 +174,6 @@ def solve(part):
                 orientation -= 1
                 if orientation == -1:
                     orientation = 3
-            #print(orientation)
     return ((y+1)*1000)+((x+1)*4)+orientation
-#print(lenOfRow(grid[0]))
-#print(solve(1))
-print(solve(2))
+print("First star: ", solve(1))
+print("Second star: ", solve(2))
