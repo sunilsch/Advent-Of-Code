@@ -58,10 +58,9 @@ def bfs(start, goal, time):
                 continue
             dist[nbr] = dist[c]+1
             q.put(nbr)
-t = 0
 s = (-1,0)
 e = (h,w-1)
-t += bfs(s,e,t)
+t = bfs(s,e,0)
 print("First star: ", t)
 t += bfs(e,s,t)
 t += bfs(s,e,t)
