@@ -20,8 +20,6 @@ for i in range(h):
                 if b == 'v' or b == '^':
                     times.add(k*h+((i-it) if b == 'v' else (it-i))%h)
         wm[(i,j)] = set(range(lcm)) - times
-for k, v in wm.items():
-     print(k, len(v))
 def getNbrs(node):
     p, t = node
     nt = (t+1) % lcm
