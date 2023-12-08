@@ -42,5 +42,5 @@ def part2():
     for i in values:
         s = s*i//gcd(s, i)
     return s
-print(part1())
-print(part2())
+print("First star: ", part1())
+print("Second star: ", part2())
