@@ -1,0 +1,2 @@
+print("First star: ", sum(max(map(int, x.split("\t"))) - min(map(int, x.split("\t"))) for x in open('day2.txt')))
+print("Second star: ", sum(next(b // a for a in map(int, x.split("\t")) for b in map(int, x.split("\t")) if b % a == 0 and a != b) for x in open('day2.txt')))
